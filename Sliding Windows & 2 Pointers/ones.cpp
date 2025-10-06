@@ -2,7 +2,8 @@
 
 /*
 Approach:
-Find the longest subarray with max zeroes as k*/
+Find the longest subarray with max zeroes as k
+*/
 
 #include <iostream>
 #include <vector>
