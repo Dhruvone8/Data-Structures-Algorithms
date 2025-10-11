@@ -1,15 +1,15 @@
-#include<iostream>
-#include<vector>
+#include <iostream>
+#include <vector>
 using namespace std;
 
-int removeDuplicates(vector<int>& nums)
+int removeDuplicates(vector<int> &nums)
 {
     int n = nums.size();
 
     int num = 1;
-    for(int i = 1; i < n; i++)
+    for (int i = 1; i < n; i++)
     {
-        if(nums[i] != nums[i-1])
+        if (nums[i] != nums[i - 1])
         {
             nums[num] = nums[i];
             num++;
@@ -24,8 +24,8 @@ int removeDuplicates(vector<int>& nums)
 
 int main()
 {
-    vector<int> nums  = {0,0,1,2,2,3,3};
+    vector<int> nums = {0, 0, 1, 2, 2, 3, 3};
     int ans = removeDuplicates(nums);
-    cout<<ans;
+    cout << ans;
     return 0;
 }
