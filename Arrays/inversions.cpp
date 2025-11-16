@@ -1,19 +1,18 @@
-/*
-Steps:
-1. Divide the array into two parts
-2. Sort the parts via recursion
-3. Merge the sorted parts
-*/
+// GFG Link: https://www.geeksforgeeks.org/problems/inversion-of-array-1587115620/1
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
-void merge(vector<int> &nums, int low, int mid, int high)
+// Merge sort approach
+
+int merge(vector<int> &nums, int low, int mid, int high)
 {
     vector<int> temp; // Create a temporary array so that original array is not modified
     int left = low;
     int right = mid + 1;
+    int count = 0;
 
     while (left <= mid && right <= high) // If any one of the condition becomes false, the loop breaks
     {
@@ -25,6 +24,7 @@ void merge(vector<int> &nums, int low, int mid, int high)
         else
         {
             temp.push_back(nums[right]);
+            count += (mid - left + 1);
             right++;
         }
     }
@@ -45,34 +45,28 @@ void merge(vector<int> &nums, int low, int mid, int high)
     {
         nums[i] = temp[i - low];
     }
+
+    return count;
 }
 
-void merge_sort(vector<int> &nums, int low, int high)
+int merge_sort(vector<int> &nums, int low, int high)
 {
+    int count = 0;
     if (low >= high)
     {
-        return;
+        return count;
     }
 
     int mid = (low + high) / 2;
 
-    merge_sort(nums, low, mid);      // Gives first half
-    merge_sort(nums, mid + 1, high); // Gives Second Half
-    merge(nums, low, mid, high);     // Merges them after base condition is reached
+    count += merge_sort(nums, low, mid);      // Gives first half
+    count += merge_sort(nums, mid + 1, high); // Gives Second Half
+    count += merge(nums, low, mid, high);     // Merges them after base condition is reached
+
+    return count;
 }
 
-int main()
+int inversionCount(vector<int> &arr)
 {
-    vector<int> arr = {5, 4, 2, 1, 3};
-    merge_sort(arr, 0, arr.size() - 1);
-    for (int num : arr)
-    {
-        cout << num << " ";
-    }
-    return 0;
+    return merge_sort(arr, 0, arr.size() - 1);
 }
-
-/*
-Time Complexity : O(n * log(n))
-Space Complexity : O(n)
-*/
