@@ -82,3 +82,65 @@ vector<int> inordertravsersal(TreeNode *root)
 
     return ans;
 }
+
+// Morris Traversal
+vector<int> morrisInorderTraversal(TreeNode* root)
+{
+    vector<int> inorder;
+    TreeNode* curr = root;
+
+    while(curr != nullptr)
+    {
+        if(curr->left == nullptr)
+        {
+            inorder.push_back(curr->val);
+            curr = curr->right;
+        }
+        
+        else
+        {
+            TreeNode* prev = curr->left;
+            while(prev->right != nullptr && prev->right != curr)
+            {
+                prev = prev->right;
+            }
+
+            
+            if(prev->right == nullptr)
+            {
+                prev->right = curr;
+                curr = curr->left;
+            }
+
+            else if(prev->right == curr)
+            {
+                prev->right = nullptr;
+                inorder.push_back(curr->val);
+                curr = curr->right;
+            }
+        }
+    }
+
+    return inorder;
+}
+
+int main()
+{
+    TreeNode* root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(3);
+
+    root->left->left = new TreeNode(4);
+    root->left->right = new TreeNode(5);
+
+    root->left->right->right = new TreeNode(6);
+
+    vector<int> ans = morrisInorderTraversal(root);
+
+    cout << "Morris Inorder Traversal: ";
+    for(int x : ans)
+        cout << x << " ";
+
+    cout << endl;
+    return 0;
+}
