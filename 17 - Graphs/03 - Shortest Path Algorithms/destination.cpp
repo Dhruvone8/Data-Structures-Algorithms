@@ -3,15 +3,18 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-    int countPaths(int n, vector<vector<int>>& roads) {
+    int countPaths(int n, vector<vector<int>> &roads)
+    {
         const int MOD = 1e9 + 7;
 
         // Create Adjancency List
         vector<pair<int, int>> adjList[n];
 
-        for (auto& it : roads) {
+        for (auto &it : roads)
+        {
             adjList[it[0]].push_back({it[1], it[2]});
             adjList[it[1]].push_back({it[0], it[2]});
         }
@@ -32,7 +35,8 @@ public:
         vector<long long> ways(n, 0);
         ways[0] = 1;
 
-        while (!pq.empty()) {
+        while (!pq.empty())
+        {
             long long time = pq.top().first;
             int node = pq.top().second;
             pq.pop();
@@ -41,14 +45,17 @@ public:
                 continue;
 
             // Traverse adjacent nodes
-            for (auto& it : adjList[node]) {
-                if (it.second + time < dist[it.first]) {
+            for (auto &it : adjList[node])
+            {
+                if (it.second + time < dist[it.first])
+                {
                     dist[it.first] = time + it.second;
                     pq.push({dist[it.first], it.first});
                     ways[it.first] = ways[node];
                 }
 
-                else if (it.second + time == dist[it.first]) {
+                else if (it.second + time == dist[it.first])
+                {
                     ways[it.first] = (ways[it.first] + ways[node]) % MOD;
                 }
             }
